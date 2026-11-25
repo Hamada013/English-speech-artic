@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><meta name="description" content="Speech Sounds: English articulation practice for children, from the test to syllables, words, phrases, sentences and stories.">
+<title>Speech Sounds</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/accounts.css"><link rel="stylesheet" href="assets/parent-gate.css">
+<script src="assets/children.js" defer></script><script src="assets/parent-gate.js" defer></script><script src="assets/accounts.en.js" data-app="english-artic" defer></script><script src="assets/therapy.js" defer></script><script src="assets/results.js" defer></script><script src="assets/clinic.js" defer></script><script src="assets/intervention-goals.js" defer></script><script src="assets/intervention.en.js" defer></script><script src="assets/child-file.en.js" data-app="english-artic" defer></script><script src="assets/speech-sync.en.js" data-app="english-artic" defer></script><script src="assets/speech-entry.en.js" data-app="english-artic" defer></script><script src="assets/nav.js" defer></script>
+<style>
+:root{--ink:#22445a;--muted:#5c7285;--line:#dceaf4;--green:#3f9a6c}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}[hidden]{display:none!important}
+body{display:flex;flex-direction:column;min-height:100dvh;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 10% 25%,#e9f8ed 0,transparent 42%),radial-gradient(ellipse at 90% 50%,#edf7ff 0,transparent 45%),#f8fafc}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #0284c7;outline-offset:2px}
+header{display:flex;justify-content:flex-start;align-items:center;gap:4px;padding:max(10px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left))}
+.account{display:flex;align-items:center;gap:8px;min-height:44px;max-width:60vw;padding:3px 14px 3px 4px;border:1px solid var(--line);border-radius:22px;background:#fff;font-weight:700}
+.nav-open{color:var(--ink)}#account{margin-inline-start:auto}.reports-link{display:flex;align-items:center;gap:6px;min-height:44px;padding:3px 14px;border:1px solid var(--line);border-radius:22px;background:#fff;font-weight:700;color:inherit;text-decoration:none}.reports-link svg{width:22px;height:22px;color:var(--green)}
+.account>span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#account-face{display:flex;flex:none}
+.account .no-face{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#edf6f0;color:var(--green)}.account .no-face svg{width:22px;height:22px}
+footer{padding:8px 16px max(12px,env(safe-area-inset-bottom));text-align:center;font-size:12px;color:var(--muted);direction:ltr}footer p{margin:1px 0}footer a{color:inherit}
+/* The accounts window, as in the apps. */
+.sheet{width:min(calc(100vw - 24px),520px);max-height:calc(100dvh - 24px);padding:12px 18px 20px;border:1px solid var(--line);border-radius:24px;color:var(--ink);background:#fff;overflow-y:auto}.sheet::backdrop{background:#22445a66}
+.sheet-head{display:flex;align-items:center;justify-content:space-between}.sheet-head h2{margin:0;font-size:21px;outline:0}
+.icon{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:14px;background:transparent}.icon svg{width:25px;height:25px}
+#account-form{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--line)}#account-form>label{font-weight:700}
+#child-name{min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:14px;font:inherit;color:inherit}
+.heroes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hero-pick{display:flex;flex-direction:column;align-items:center;padding:8px;border:2px solid var(--line);border-radius:18px;cursor:pointer}.hero-pick input{position:absolute;opacity:0}.hero-pick:has(input:checked){border-color:#62aa8c;background:#edf6f0}.hero-pick:has(input:focus-visible){outline:3px solid #0284c7}
+.error{margin:8px 0;color:#a43c38;font-size:15px;min-height:1.4em}
+.primary{min-height:52px;padding:10px 26px;border:0;border-radius:18px;background:var(--green);color:#fff;font-weight:700;font-size:18px}
+/* The home page, redesigned 2026-11-14: a greeting with the child’s face, today’s session as a coloured card, and the
+   parts as tiles in their fixed colours (the same as in the reports), each with its latest score as a thin bar.
+   Tiles rise in one after another, press with a small bounce, and pages fade into each other (assets/nav.css). */
+main{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(100%,640px);margin:0 auto;padding:8px 16px 16px}
+.hero{display:flex;align-items:center;gap:14px;width:100%;padding:4px 2px}
+.hero-face{display:grid;place-items:center;width:68px;height:68px;flex:none;border-radius:24px;background:#fff;box-shadow:0 8px 20px #2a54701f;overflow:hidden}
+.hero-face img{width:56px;height:auto}.hero-face .suite-avatar,.hero-face>span{transform:scale(1.25)}
+.hero p{margin:0;color:var(--muted);font-size:15px}.hero h1{margin:0;font-size:clamp(26px,4.2vh,34px);line-height:1.2}
+nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.app{--c:#3f9a6c;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:128px;padding:14px 14px 28px;border-radius:26px;background:color-mix(in srgb,var(--c) 9%,#fff);box-shadow:0 8px 22px color-mix(in srgb,var(--c) 14%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--c) 16%,transparent);color:inherit;text-decoration:none;overflow:hidden;transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s;-webkit-tap-highlight-color:transparent}
+.app::after{content:'';position:absolute;inset:auto -30px -50px auto;width:120px;height:120px;border-radius:50%;background:color-mix(in srgb,var(--c) 10%,transparent);pointer-events:none}
+.app-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:18px;background:var(--c);color:#fff;box-shadow:0 6px 14px color-mix(in srgb,var(--c) 35%,transparent)}
+.app-icon svg{width:30px;height:30px;color:#fff}
+.app-text{display:flex;flex-direction:column;gap:1px}.app-text b{font-size:19px}.app-text small{font-size:13px;color:var(--muted)}
+.app-bar{position:absolute;inset:auto 14px 12px 14px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--c) 14%,#fff)}.app-bar i{display:block;height:100%;width:var(--p,0%);border-radius:3px;background:var(--c);transition:width .9s cubic-bezier(.2,.9,.3,1)}
+.app-bar[hidden]{display:none}.app-score{position:absolute;top:14px;left:14px;font-size:13px;font-weight:800;color:var(--c)}
+.app.test-card{grid-column:1 / -1;flex-direction:row;align-items:center;min-height:96px;gap:14px}.app.test-card .app-bar{inset-inline-start:84px}
+a.app:hover{transform:translateY(-3px)}a.app:active{transform:scale(.96)}a.app:active .app-icon{transform:rotate(-6deg) scale(1.06)}.app-icon{transition:transform .2s}
+nav .app.locked{opacity:.45;filter:saturate(.3)}nav .app.locked .app-score{display:none}
+@media (prefers-reduced-motion:no-preference){
+ .hero,.today,nav .app{animation:home-rise .55s cubic-bezier(.2,.9,.3,1) both}
+ .today{animation-delay:.05s}nav .app:nth-child(1){animation-delay:.08s}nav .app:nth-child(2){animation-delay:.13s}nav .app:nth-child(3){animation-delay:.18s}nav .app:nth-child(4){animation-delay:.23s}nav .app:nth-child(5){animation-delay:.28s}nav .app:nth-child(6){animation-delay:.33s}nav .app:nth-child(7){animation-delay:.38s}
+ .hero-face{animation:home-rise .55s both,face-wave 3.5s 1s ease-in-out infinite}
+}
+@keyframes home-rise{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes face-wave{0%,80%,100%{transform:none}86%{transform:rotate(-6deg)}93%{transform:rotate(5deg)}}
+@media (min-width:760px){main{width:min(100%,900px)}nav{grid-template-columns:repeat(3,1fr)}.app.test-card{grid-column:1 / -1}}
+@media (orientation:landscape) and (max-height:520px){main{gap:10px;padding-block:4px;width:min(100%,980px)}.hero{display:none}nav{grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.app,.app.test-card{grid-column:auto;flex-direction:column;align-items:center;text-align:center;min-height:104px;padding:10px 6px 16px;gap:6px}.app-icon{width:42px;height:42px;border-radius:14px}.app-icon svg{width:24px;height:24px}.app-text b{font-size:15px}.app-text small{display:none}.app-bar{inset:auto 8px 7px 8px;height:4px}.app.test-card .app-bar{inset-inline-start:8px}.app-score{display:none}}
+/* «حفظ دون إنترنت»: one card saves the whole app (sw.js). */
+.offline{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:22px;background:#fff}
+.offline-icon{display:grid;place-items:center;width:44px;height:44px;flex:none;border-radius:15px;background:#edf6f0;color:var(--green)}.offline-icon svg{width:24px;height:24px}
+.offline-text{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}.offline-text b{font-size:16px}.offline-text small{font-size:13px;color:var(--muted)}
+.offline-text progress{width:100%;height:8px;accent-color:var(--green)}
+.offline-go{min-height:44px;padding:6px 18px;border:0;border-radius:14px;background:var(--green);color:#fff;font-weight:700}.offline-go:disabled{opacity:.5}
+.offline.saved .offline-icon{background:var(--green);color:#fff}
+/* Today’s session (with a plan, assets/therapy.js): two or three activities, the next one in gold, stars when done,
+   and the last two weeks as small squares. Parts outside the plan look locked until the therapist opens them (013). */
+.today{width:100%;padding:16px;border-radius:28px;background:linear-gradient(135deg,#3f9a6c,#2f7d8f);color:#fff;box-shadow:0 14px 30px #2f7d8f40}.today .today-head h2{color:#fff}.today-time{background:#ffffff2e!important;color:#fff!important}.today-head .icon{color:#fff!important}#unlock[aria-pressed=true]{background:#ffffff2e!important;color:#fff!important}
+.today-head{display:flex;align-items:center;gap:4px;margin-bottom:10px}.today-head h2{margin:0 0 0 6px;font-size:20px}.today-head .grow{flex:1}
+.today-time{padding:2px 10px;border-radius:10px;background:#eef4f8;color:var(--muted);font-size:13px;font-weight:700}
+.today-head .icon{color:var(--ink);text-decoration:none}#unlock[aria-pressed=true]{background:#edf6f0;color:var(--green)}
+.today-list{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.task{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;width:100%;min-height:108px;padding:10px 6px 8px;border:2px solid transparent;border-radius:20px;background:#ffffffeb;color:var(--ink);text-align:center;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}.task:active{transform:scale(.95)}
+.task svg.part{width:24px;height:24px;color:var(--green)}.task b{font-size:34px;line-height:1.15}.task b.long{font-size:18px;line-height:2.1}.task small{font-size:12px;line-height:1.3;color:var(--muted)}
+.task .star{position:absolute;top:6px;left:6px;width:22px;height:22px;fill:#eef3f7;stroke:#c3d2dc;stroke-width:1.4}
+.task.done{border-color:#cfe8d9;background:#f3faf6}.task.done .star{fill:#f0b63b;stroke:#b27b10}
+.task.next{border-color:#f0b63b;background:#fff;box-shadow:0 0 0 4px #f0b63b33}
+.today-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+#today-go,#today-more{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#2c7a53;box-shadow:0 6px 16px #0002}#today-go svg{width:22px;height:22px;fill:#2c7a53;stroke:#2c7a53}.today-end{color:#fff!important}.mini-days i{background:#ffffff40!important}.mini-days i[data-done="1"]{background:#bfe8cf!important}.mini-days i[data-done="2"]{background:#fff!important}.mini-days i.now{box-shadow:0 0 0 2px #fff!important}
+.today-end{margin:0;font-weight:700;color:var(--green)}
+.mini-days{display:grid;grid-template-columns:repeat(7,13px);gap:3px;flex:none}.mini-days i{width:13px;height:13px;border-radius:4px;background:#eef3f7}
+.mini-days i[data-done="1"]{background:#8fcaa9}.mini-days i[data-done="2"]{background:var(--green)}.mini-days i[data-started=true][data-done="0"]{background:#d6ecdf}.mini-days i.now{box-shadow:0 0 0 2px var(--ink)}
+nav .app.locked{opacity:.5;box-shadow:none}.lock-badge{position:absolute;top:10px;left:12px;display:flex}.lock-badge svg{width:20px;height:20px;color:var(--muted)}
+#gate-form{display:flex;flex-direction:column;gap:8px}#gate-code{min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:14px;font:inherit;color:inherit;direction:ltr;text-align:center;letter-spacing:6px}
+.gate-row{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}.gate-row button:not(.primary){min-height:48px;padding:8px 18px;border:1px solid var(--line);border-radius:14px;background:#fff}
+@media (max-height:620px){footer{display:none}}
+/* Phones held sideways: a smaller title and all five parts in one row. */
+@media (orientation:landscape) and (max-height:520px){body.has-plan .hero{display:none}.today{width:min(100%,960px);display:grid;grid-template-columns:1fr auto;gap:0 14px;align-items:center;padding:10px 14px}.today-head{grid-column:1 / -1;margin-bottom:6px}.task{min-height:84px;flex-direction:row;justify-content:center;gap:8px}.task b{font-size:30px}.today-foot{flex-direction:column;margin:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style><link rel="stylesheet" href="assets/nav.css"><link rel="stylesheet" href="assets/intervention.css"><link rel="stylesheet" href="assets/clinic.css"><link rel="stylesheet" href="assets/home.css">
+</head><body>
+<header>
+ <a class="reports-link" href="reports/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m6 7H2"/></svg><span>Reports</span></a>
+ <button id="account" class="account" type="button" aria-haspopup="dialog"><span id="account-none" class="no-face" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span id="account-face" hidden></span><span id="account-name">Accounts</span></button>
+</header>
+<main>
+ <section class="hero"><span id="hero-face" class="hero-face"><img src="assets/logo.webp" alt=""></span><div><p id="hero-hello"></p><h1>Speech Sounds</h1></div></section>
+ <section id="today" class="today" hidden aria-labelledby="today-title">
+  <div class="today-head"><h2 id="today-title">Today’s practice</h2><span id="today-time" class="today-time"></span><span class="grow"></span>
+   <a id="today-plan" class="icon" href="plan/index.html" aria-label="Therapy plan" title="Therapy plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4"/><path d="M19 8V3l3 1.5L19 6"/></svg></a>
+   <button id="unlock" class="icon" type="button" aria-pressed="false" aria-label="Therapist mode: open every part" title="Therapist mode"></button></div>
+  <ol id="today-list" class="today-list"></ol>
+  <div class="today-foot"><button id="today-go" class="primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg><span>Start today’s session</span></button><p id="today-end" class="today-end" hidden></p><button id="today-more" class="primary" type="button" hidden>A second session</button><div id="today-days" class="mini-days" role="img"></div></div>
+ </section>
+ <a id="stickers-link" class="stickers-link" href="stickers/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="m12 9 1.3 2.7 2.9.4-2.1 2 .5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4Z"/></svg><b>Sticker album</b><small id="stickers-count" hidden></small></a>
+ <nav aria-label="Parts">
+  <a class="app test-card" href="test/index.html" data-part="test" style="--c:#0f9fb5"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v3H9zM7 5H5v16h14V5h-2"/><path d="m9 13 2 2 4-4"/></svg></span><span class="app-text"><b>Speech sound test</b><small>Before and after practice</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="syllable/syllable.html" data-part="syllables" style="--c:#6250d6"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="9" width="6" height="7" rx="1.5"/><rect x="9" y="9" width="6" height="7" rx="1.5"/><path d="M16 16V7h3l3 4v5Z"/><circle cx="5" cy="18" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="19" cy="18" r="1.5"/></svg></span><span class="app-text"><b>Syllables</b><small>The syllable train</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="words/index.html" data-part="words" style="--c:#2a78d6"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4Z"/><path d="M8 9h8M8 12h5"/></svg></span><span class="app-text"><b>Words</b><small>Word island</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="phrases/index.html" data-part="phrases" style="--c:#eb6834"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h9v7H6l-3 3Z"/><path d="M12 9h9v7h-1v3l-3-3h-5Z"/></svg></span><span class="app-text"><b>Phrases</b><small>The phrase tower</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="sentences/index.html" data-part="sentences" style="--c:#1baf7a"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 10h16M4 14h16M4 18h9"/></svg></span><span class="app-text"><b>Sentences</b><small>Falling sentences</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="stories/index.html" data-part="stories" style="--c:#b8860b"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-9-2v14c4 0 7 .5 9 2 2-1.5 5-2 9-2V4c-4 0-7 .5-9 2Zm0 0v14"/></svg></span><span class="app-text"><b>Stories</b><small>A book for each sound</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+  <a class="app" href="approaches/index.html" data-part="approaches" style="--c:#b5487a"><span class="app-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="8" height="14" rx="2"/><rect x="14" y="5" width="8" height="14" rx="2"/><path d="M11 12h2"/></svg></span><span class="app-text"><b>Approaches</b><small>Pairs, oppositions, cycles</small></span><span class="app-score" hidden></span><span class="app-bar" hidden><i></i></span></a>
+ </nav>
+ <section id="offline" class="offline" aria-labelledby="offline-title" hidden>
+  <span class="offline-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></span>
+  <div class="offline-text"><b id="offline-title">The app offline</b><small id="offline-status"></small><progress id="offline-progress" max="100" value="0" hidden></progress></div>
+  <button id="offline-go" class="offline-go" type="button">Save</button>
+ </section>
+</main>
+<footer><p>SPEECH AND LANGUAGE PATHOLOGY</p><p><strong>Ahmad Ghanem</strong></p><p>Latakia - Syria</p><p><a href="mailto:slp.ahmadghanem@gmail.com">slp.ahmadghanem@gmail.com</a></p></footer>
+
+<dialog id="accounts" class="sheet" aria-labelledby="accounts-title">
+ <div class="sheet-head"><h2 id="accounts-title" tabindex="-1" autofocus>Accounts</h2><button class="icon" data-close type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+ <div id="account-list"></div>
+ <form id="account-form" novalidate>
+  <label for="child-name">New child</label><input id="child-name" autocomplete="off" maxlength="40" placeholder="Name">
+  <div class="heroes" role="radiogroup" aria-label="Character">
+   <label class="hero-pick"><input type="radio" name="character" value="boy" checked><span data-kid="boy"></span><span>Boy</span></label>
+   <label class="hero-pick"><input type="radio" name="character" value="girl"><span data-kid="girl"></span><span>Girl</span></label>
+  </div>
+  <p id="account-error" class="error" role="alert" hidden></p>
+  <button class="primary" type="submit">Start</button>
+ </form>
+</dialog>
+<dialog id="gate" class="sheet" aria-labelledby="gate-title">
+ <form id="gate-form" method="dialog"><div class="sheet-head"><h2 id="gate-title">Therapist mode</h2></div><label for="gate-code">The code opens every part</label><input id="gate-code" type="password" inputmode="numeric" autocomplete="off" maxlength="6"><p id="gate-error" class="error" role="alert" hidden>Wrong code.</p><div class="gate-row"><button type="button" id="gate-cancel">Cancel</button><button class="primary" type="submit">Open</button></div></form>
+</dialog>
+
+<script>
+/* The one account for every app: chosen here, and the same child is active inside each app. */
+/* Launch: the logo pops in and bounces once per visit, not over the clinic start screen (assets/home.css). */
+(() => {
+  try { if (sessionStorage.getItem('english-artic-launched')) return; sessionStorage.setItem('english-artic-launched', '1'); } catch { return; }
+  const veil = document.createElement('div'); veil.className = 'artic-launch'; veil.setAttribute('aria-hidden', 'true');
+  veil.innerHTML = '<div><img src="assets/logo.webp" alt=""><b>Speech Sounds</b></div>';
+  document.documentElement.append(veil);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(() => { veil.classList.add('out'); setTimeout(() => veil.remove(), 300); }, reduced ? 400 : 1850);
+  document.addEventListener('DOMContentLoaded', () => { if (document.querySelector('dialog.speech-entry')) veil.remove(); });
+})();
+document.addEventListener('DOMContentLoaded', () => {
+  const Children = window.ArticulationChildren, $ = id => document.getElementById(id);
+  let next = null;
+  /* The greeting shows the child’s face; each tile its part's latest score (assets/results.js). */
+  function drawHero() {
+    const child = Children.active();
+    // The child’s own head and name, no greeting word (2026-11).
+    $('hero-hello').textContent = child ? child.name : '';
+    const stickers = child?.stickers?.length || 0; $('stickers-count').textContent = digits(stickers); $('stickers-count').hidden = !stickers;
+    $('hero-face').replaceChildren(child && window.SuiteAccounts ? window.SuiteAccounts.avatar(child, 'pick') : Object.assign(document.createElement('img'), { src: 'assets/logo.webp', alt: '' }));
+    const parts = child && window.ArticulationResults ? window.ArticulationResults.all(child.id) : [];
+    document.querySelectorAll('nav a.app[data-part]').forEach(link => {
+      const part = parts.find(p => p.part === link.dataset.part), bar = link.querySelector('.app-bar'), score = link.querySelector('.app-score');
+      bar.hidden = score.hidden = !part || part.percent == null;
+      if (part && part.percent != null) { score.textContent = `${part.percent}%`; requestAnimationFrame(() => bar.style.setProperty('--p', `${part.percent}%`)); }
+    });
+  }
+  function drawAccount() {
+    const child = Children.active();
+    $('account-name').textContent = child ? child.name : 'Accounts';
+    $('account').setAttribute('aria-label', child ? `Account: ${child.name}` : 'Accounts');
+    $('account-face').hidden = !child; $('account-none').hidden = !!child;
+    if (child) $('account-face').replaceChildren(window.SuiteAccounts.avatar(child, 'small'));
+  }
+  function drawList() {
+    $('child-name').value = ''; $('account-error').hidden = true;
+    window.SuiteAccounts.render($('account-list'), Children.list(), child => {
+      const select = document.createElement('button'); select.type = 'button'; select.onclick = () => choose(child.id);
+      return window.SuiteAccounts.row(child, select);
+    });
+  }
+  function choose(id) {
+    Children.choose(id); drawAccount(); drawToday(); drawHero(); $('accounts').close();
+    const go = next; next = null; if (go) location.href = go;
+  }
+  async function open() {
+    if (Children.active() && !await window.ChildAccountGate.request()) return;
+    drawList(); $('accounts').showModal();
+  }
+  $('account').onclick = () => { next = null; void open(); };
+  $('account-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const name = $('child-name').value.trim();
+    if (!name) { $('account-error').textContent = 'Type the child’s name first.'; $('account-error').hidden = false; $('child-name').focus(); return; }
+    choose(Children.add(name, new FormData(event.target).get('character')).id);
+  });
+  /* An app opens for the active child; with none chosen yet, the accounts window comes first. */
+  /* ---------- Today’s session and the locks (assets/therapy.js) ---------- */
+  const T = window.ArticulationTherapy, icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${T.ICONS[name]}</svg>`;
+  const digits = n => String(n).replace(/\d/g, d => '0123456789'[d]);
+  let after = null;
+  function drawToday() {
+    const child = Children.active(), info = child && T ? T.day(child.id) : null, open = !info || T.therapistOpen(), parts = info ? T.partsOf(info.view) : null;
+    document.body.classList.toggle('has-plan', !!info); $('today').hidden = !info;
+    document.querySelectorAll('nav a.app[data-part]').forEach(link => {
+      const locked = !open && !parts.has(link.dataset.part);
+      link.classList.toggle('locked', locked);
+      if (locked && !link.querySelector('.lock-badge')) link.insertAdjacentHTML('beforeend', `<span class="lock-badge" aria-hidden="true">${icon('lock')}</span>`);
+      if (!locked) link.querySelector('.lock-badge')?.remove();
+      if (locked) link.setAttribute('aria-description', 'Locked: not in the plan'); else link.removeAttribute('aria-description');
+    });
+    if (!info) return;
+    $('unlock').innerHTML = icon(open ? 'open' : 'lock'); $('unlock').setAttribute('aria-pressed', String(open));
+    const session = info.open || info.sessions.at(-1), list = session?.activities || [], next = list.find(a => !a.done);
+    $('today-time').textContent = `${digits(list.length * T.MINUTES)} min`;
+    $('today-list').style.setProperty('--n', Math.max(1, list.length));
+    $('today-list').replaceChildren(...list.map(activity => {
+      const item = document.createElement('li'), button = document.createElement('button'), l = T.label(activity);
+      button.type = 'button'; button.className = `task${activity.done ? ' done' : ''}${activity === next ? ' next' : ''}`;
+      button.innerHTML = `<svg viewBox="0 0 24 24" class="part" aria-hidden="true">${T.ICONS[activity.part]}</svg><b dir="ltr"${[...l.target].length > 2 ? ' class="long"' : ''}>${l.target}</b><small>${l.title}<br>${l.detail}</small><svg viewBox="0 0 24 24" class="star" aria-hidden="true">${T.ICONS.star}</svg>`;
+      button.setAttribute('aria-label', `${l.title}: ${l.target}, ${l.detail}${activity.done ? ', done' : ''}`);
+      button.onclick = () => go(activity.key);
+      item.append(button); return item;
+    }));
+    // The road ends in a star that lights up when today’s session is done.
+    const star = document.createElement('li'); star.className = `road-end${list.length && !next ? ' done' : ''}`; star.setAttribute('aria-hidden', 'true');
+    star.innerHTML = '<svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></svg>'; $('today-list').append(star);
+    $('today-go').hidden = !next;
+    $('today-end').hidden = !!next; $('today-end').textContent = !list.length ? 'No activities in the plan right now.' : info.more ? 'Well done! Today’s practice is finished.' : 'Well done! Today’s practice is finished. See you tomorrow.';
+    $('today-more').hidden = !info.more;
+    const days = T.calendar(info.plan, 14);
+    $('today-days').replaceChildren(...days.map(d => { const i = document.createElement('i'); i.dataset.done = String(Math.min(2, d.done)); i.dataset.started = String(d.started); if (d.today) i.className = 'now'; return i; }));
+    $('today-days').setAttribute('aria-label', `Practice days in two weeks: ${digits(days.filter(d => d.done).length)}`);
+  }
+  function go(key) { const child = Children.active(), href = child && T.begin(child.id, key); if (href) location.href = href; }
+  $('today-go').onclick = () => { const child = Children.active(), info = child && T.day(child.id), next = info?.open?.activities.find(a => !a.done); if (next) go(next.key); };
+  $('today-more').onclick = () => { const child = Children.active(); if (child && T.another(child.id)) drawToday(); };
+  /* One therapist switch for the whole app: a locked part asks through the header lock (assets/intervention.js). */
+  function gate(then) { after = then; const lock = document.querySelector('[data-therapist]'); if (lock) { lock.click(); return; } $('gate-code').value = ''; $('gate-error').hidden = true; $('gate').showModal(); $('gate-code').focus(); }
+  window.addEventListener('voc-therapist-change', event => { drawToday(); const then = after; after = null; if (event.detail?.active && then) location.href = then; });
+  $('gate-form').addEventListener('submit', event => {
+    if ($('gate-code').value !== '013') { event.preventDefault(); $('gate-error').hidden = false; $('gate-code').select(); return; }
+    T.setTherapist(true); drawToday(); const then = after; after = null; if (then) location.href = then;
+  });
+  $('gate-cancel').onclick = () => { after = null; $('gate').close(); };
+  $('unlock').onclick = () => { if (T.therapistOpen()) { T.setTherapist(false); drawToday(); } else gate(null); };
+  document.querySelectorAll('a.app').forEach(link => link.addEventListener('click', event => {
+    if (link.classList.contains('locked')) { event.preventDefault(); gate(link.href); return; }
+    if (Children.active()) return;
+    event.preventDefault(); next = link.href; drawList(); $('accounts').showModal();
+  }));
+  document.querySelector('#accounts [data-close]').onclick = () => { next = null; $('accounts').close(); };
+  $('accounts').addEventListener('click', event => {
+    if (event.target !== $('accounts')) return;
+    const box = $('accounts').getBoundingClientRect();
+    if (event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom) return;
+    next = null; $('accounts').close();
+  });
+  /* ---------- The whole app offline (sw.js) ---------- */
+  const mb = bytes => `${Math.round(bytes / 1048576)} MB`;
+  function ask(worker, type, progress) {
+    return new Promise((resolve, reject) => {
+      const channel = new MessageChannel();
+      channel.port1.onmessage = event => { const d = event.data; if (d.error) { channel.port1.close(); reject(Error(d.error)); } else if (type === 'STATUS' || d.complete) { channel.port1.close(); resolve(d); } else progress?.(d); };
+      worker.postMessage({ type }, [channel.port2]);
+    });
+  }
+  function showOffline(state, text) {
+    const done = state && state.saved >= state.total;
+    $('offline').classList.toggle('saved', !!done);
+    $('offline-status').textContent = text || (done ? 'Saved on this device. It works offline.' : state ? `Saved ${digits(Math.floor(state.saved / state.total * 100))}% · finish saving` : 'Save the whole app on this device to use it offline (about 5 MB).');
+    $('offline-go').hidden = !!done; $('offline-go').textContent = state && state.saved ? 'Continue' : 'Save';
+  }
+  const activeWorker = async () => { const reg = await navigator.serviceWorker.getRegistration('./'); return reg && new URL(reg.active?.scriptURL || reg.installing?.scriptURL || 'x:', location.href).pathname.endsWith('/sw.js') && reg.scope === new URL('./', location.href).href ? reg : null; };
+  async function offlineInit() {
+    if (!('serviceWorker' in navigator) || !isSecureContext) return;
+    $('offline').hidden = false; showOffline(null);
+    const reg = await activeWorker().catch(() => null);
+    if (!reg) return;
+    navigator.serviceWorker.register('sw.js', { scope: './' }).catch(() => {});
+    if (reg.active) showOffline(await ask(reg.active, 'STATUS').catch(() => null));
+  }
+  $('offline-go').onclick = async () => {
+    const go = $('offline-go'), bar = $('offline-progress');
+    go.disabled = true; bar.hidden = false; bar.removeAttribute('value');
+    showOffline(null, 'Saving the pages…');
+    navigator.storage?.persist?.().catch(() => {});
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js', { scope: './' });
+      const worker = reg.active || await new Promise((resolve, reject) => { const w = reg.installing || reg.waiting; w.addEventListener('statechange', () => { if (w.state === 'activated') resolve(w); if (w.state === 'redundant') reject(Error('Could not save the pages. Connect to the internet and try again.')); }); });
+      const state = await ask(worker, 'DOWNLOAD', d => { bar.value = Math.floor(d.saved / d.total * 100); showOffline(null, `Saving the pictures and sounds ${digits(bar.value)}%`); });
+      bar.hidden = true; showOffline(state);
+    } catch (error) { bar.hidden = true; showOffline(null, error.message); }
+    go.disabled = false;
+  };
+  void offlineInit();
+  window.addEventListener('pageshow', () => { Children.reload(); drawAccount(); drawToday(); drawHero(); });
+  drawAccount(); drawToday(); drawHero();
+});
+</script>
+</body></html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Therapy plan</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="stylesheet" href="../assets/accounts.css"><link rel="stylesheet" href="../assets/parent-gate.css"><link rel="stylesheet" href="plan.css">
+<script src="../assets/children.js" defer></script><script src="../assets/parent-gate.js" defer></script><script src="../assets/accounts.en.js" data-app="english-artic" defer></script>
+<script src="../assets/therapy.js" defer></script><script src="../assets/results.js" defer></script><script src="../assets/clinic.js" defer></script><script src="../assets/intervention-goals.js" defer></script><script src="../assets/intervention.en.js" defer></script><script src="../assets/child-file.en.js" data-app="english-artic" defer></script><script src="../assets/speech-sync.en.js" data-app="english-artic" defer></script><script src="../assets/speech-entry.en.js" data-app="english-artic" defer></script><script src="../assets/nav.js" defer></script><script src="plan.js" defer></script>
+<link rel="stylesheet" href="../assets/nav.css"><link rel="stylesheet" href="../assets/intervention.css"><link rel="stylesheet" href="../assets/clinic.css">
+</head><body>
+<header class="bar">
+ <a class="icon" href="../index.html" aria-label="Home page" title="Home page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H5V10M9 21v-8h6v8"/></svg></a>
+ <h1>Therapy plan</h1>
+ <span class="bar-tools">
+  <a class="icon" href="../reports/index.html" aria-label="Reports" title="Reports"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m6 7H2"/></svg></a>
+  <button id="print" class="icon" type="button" aria-label="Print / Save PDF" title="Print / Save PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 17H3v-7h18v7h-3M7 14h10v7H7Z"/></svg></button>
+  <button id="therapist" class="icon" type="button" aria-label="Therapist mode" title="Therapist mode" aria-pressed="false"></button>
+ </span>
+</header>
+<main>
+ <section class="who"><span id="face"></span><div><h2 id="name">—</h2><p id="source"></p></div></section>
+
+ <section id="empty" class="card empty" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4"/><path d="M19 8V3l3 1.5L19 6"/></svg>
+  <p id="empty-text">No plan yet. Open the speech sound test report and tap «Therapy plan».</p>
+  <a class="primary" href="../test/index.html">Speech sound test</a>
+ </section>
+
+ <div id="content" hidden>
+  <section class="card summary" aria-label="Plan summary">
+   <figure class="ring-box"><svg id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg><figcaption><b id="ring-text" dir="ltr"></b><span>Steps done</span></figcaption></figure>
+   <div class="stats">
+    <div class="stat"><b id="stat-sounds"></b><span>Sounds</span><i id="stat-letters" class="letters"></i></div>
+    <div class="stat"><b id="stat-patterns"></b><span>Patterns</span></div>
+    <div class="stat"><b id="stat-week"></b><span>Sessions this week</span></div>
+   </div>
+  </section>
+
+  <section class="card" aria-labelledby="ladder-title">
+   <div class="card-head"><h3 id="ladder-title">Sounds and their steps</h3><button id="add-sound" class="pick tool" type="button" aria-haspopup="menu" hidden>Add a sound<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+   <div id="ladder" class="ladder" role="table" aria-label="Each sound and its step in each part"></div>
+   <ul class="legend"><li><i class="k-done"></i>Done</li><li><i class="k-now"></i>Practising now</li><li><i class="k-later"></i>Later</li><li><i class="k-skip"></i>Not needed</li></ul>
+  </section>
+
+  <section id="patterns-card" class="card" aria-labelledby="patterns-title">
+   <div class="card-head"><h3 id="patterns-title">Patterns and approaches</h3><button id="add-pattern" class="pick tool" type="button" aria-haspopup="menu" hidden>Add a pattern<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+   <div id="patterns" class="patterns"></div>
+   <p id="patterns-none" class="muted" hidden>No pattern is shared by two errors or more.</p>
+  </section>
+
+  <section class="card" aria-labelledby="days-title">
+   <div class="card-head"><h3 id="days-title">Practice days</h3><span id="days-note" class="muted"></span></div>
+   <div id="days" class="days"></div>
+   <ul class="legend"><li><i class="d-0"></i>No session</li><li><i class="d-s"></i>Started</li><li><i class="d-1"></i>1 session</li><li><i class="d-2"></i>2 sessions</li></ul>
+   <div id="settings" class="settings tool" hidden>
+    <div><span>Activities per session</span><span class="seg" data-setting="activities"><button type="button" data-value="2">2</button><button type="button" data-value="3">3</button></span></div>
+    <div><span>Sessions a day</span><span class="seg" data-setting="perDay"><button type="button" data-value="1">1</button><button type="button" data-value="2">2</button></span></div>
+   </div>
+  </section>
+
+  <details class="card detail"><summary>The test results the plan is built on</summary><div class="table-wrap"><table><thead><tr><th>Sound</th><th>Beginning</th><th>Middle</th><th>End</th></tr></thead><tbody id="results"></tbody></table></div></details>
+
+  <div class="tool end-tools" hidden><button id="delete-plan" class="danger" type="button">Delete the plan</button></div>
+ </div>
+</main>
+
+<dialog id="gate" class="sheet" aria-labelledby="gate-title">
+ <form id="gate-form" method="dialog">
+  <h2 id="gate-title">Therapist mode</h2>
+  <label for="gate-code">Code</label><input id="gate-code" type="password" inputmode="numeric" autocomplete="off" maxlength="6">
+  <p id="gate-error" class="error" role="alert" hidden>Wrong code.</p>
+  <div class="row"><button type="button" id="gate-cancel">Cancel</button><button class="primary" type="submit">Open</button></div>
+ </form>
+</dialog>
+<dialog id="confirm" class="sheet" aria-labelledby="confirm-title">
+ <h2 id="confirm-title">Delete the plan?</h2><p>The child’s progress in the parts stays, and every part opens.</p>
+ <div class="row"><button type="button" id="confirm-no">Cancel</button><button type="button" id="confirm-yes" class="danger">Delete</button></div>
+</dialog>
+</body></html>

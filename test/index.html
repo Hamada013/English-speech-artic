@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Speech sound test</title>
+<meta name="description" content="Speech Sounds: an English (General American) speech sound test with error patterns, age expectations and a therapy plan.">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="stylesheet" href="../assets/accounts.css"><link rel="stylesheet" href="../assets/parent-gate.css"><link rel="stylesheet" href="test.css">
+<script src="../words/assets/art-kit.js" defer></script><script src="../words/assets/art-common.js" defer></script><script src="../words/assets/art-words-alef.js" defer></script><script src="../words/assets/art-words-ba.js" defer></script><script src="../words/assets/art-words-ta.js" defer></script><script src="../words/assets/art-words-tha.js" defer></script><script src="../words/assets/art-words-jeem.js" defer></script><script src="../words/assets/art-words-ha.js" defer></script><script src="../words/assets/art-words-kha.js" defer></script><script src="../words/assets/art-words-dal.js" defer></script><script src="../words/assets/art-words-dhal.js" defer></script><script src="../words/assets/art-words-ra.js" defer></script><script src="../words/assets/art-words-zay.js" defer></script><script src="../words/assets/art-words-seen.js" defer></script><script src="../words/assets/art-words-sheen.js" defer></script><script src="../words/assets/art-words-sad.js" defer></script><script src="../words/assets/art-words-dad.js" defer></script><script src="../words/assets/art-words-tta.js" defer></script><script src="../words/assets/art-words-zha.js" defer></script><script src="../words/assets/art-words-ain.js" defer></script><script src="../words/assets/art-words-ghain.js" defer></script><script src="../words/assets/art-words-fa.js" defer></script><script src="../words/assets/art-words-qaf.js" defer></script><script src="../words/assets/art-words-kaf.js" defer></script><script src="../words/assets/art-words-lam.js" defer></script><script src="../words/assets/art-words-mim.js" defer></script><script src="../words/assets/art-words-nun.js" defer></script><script src="../words/assets/art-words-heh.js" defer></script><script src="../words/assets/art-words-waw.js" defer></script><script src="../words/assets/art-words-ya.js" defer></script><script src="../words/assets/art-house.js" defer></script><script src="../words/assets/art-street.js" defer></script><script src="../words/assets/art-words-en.js" defer></script><script src="../words/assets/art-cozy.js" defer></script><script src="../words/assets/art.js" defer></script>
+<script src="../assets/children.js" defer></script><script src="../assets/parent-gate.js" defer></script><script src="../assets/accounts.en.js" data-app="english-artic" defer></script>
+<script src="../assets/therapy.js" defer></script><script src="../assets/results.js" defer></script><script src="../assets/clinic.js" defer></script><script src="../assets/intervention-goals.js" defer></script><script src="../assets/intervention.en.js" defer></script><script src="../assets/child-file.en.js" data-app="english-artic" defer></script><script src="../assets/speech-sync.en.js" data-app="english-artic" defer></script><script src="../assets/speech-entry.en.js" data-app="english-artic" defer></script><script src="../assets/nav.js" defer></script><script src="../assets/voice.js" defer></script>
+<script src="items.js" defer></script><script src="test.js" defer></script>
+<link rel="stylesheet" href="../assets/nav.css"><link rel="stylesheet" href="../assets/intervention.css"><link rel="stylesheet" href="../assets/clinic.css">
+</head><body>
+<header class="bar">
+ <a class="icon" href="../index.html" aria-label="Home page" title="Home page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H5V10M9 21v-8h6v8"/></svg></a>
+ <h1>Speech sound test</h1>
+ <span class="bar-tools">
+  <button id="account" class="icon" type="button" aria-label="Children’s accounts" title="Children’s accounts" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
+ </span>
+</header>
+
+<main id="start" class="page">
+ <section class="card who">
+  <div><p class="kicker">Child</p><h2 id="child-name">No child chosen</h2></div>
+  <button id="choose-child" class="secondary" type="button">Choose a child</button>
+ </section>
+ <form id="new-test" class="card form" novalidate>
+  <h2>New test</h2>
+  <div class="fields">
+   <label>Test date<input id="f-date" type="date" required></label>
+   <label>Date of birth<input id="f-birth" type="date"></label>
+   <label class="wide">Examiner<input id="f-examiner" maxlength="60" autocomplete="name"></label>
+  </div>
+  <p class="muted small">The test has <b id="count-words"></b> pictures, <b id="count-blends"></b> blends and <b id="count-sentences"></b> sentences. The child names each picture; tap the speaker to say the word for the child to repeat.</p>
+  <button id="begin" class="primary" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7Z"/></svg><span>Start the test</span></button>
+ </form>
+ <section class="card" id="history-card" hidden>
+  <h2>Earlier tests</h2>
+  <ul id="history" class="history"></ul>
+ </section>
+ <p class="muted small note">An informal, criterion-referenced screener for General American English. It does not give standard scores; the therapist makes the diagnosis.</p>
+</main>
+
+<main id="run" class="page run" hidden>
+ <div class="progress"><span id="section-name"></span><div class="track"><i id="progress-fill"></i></div><b id="progress-text"></b></div>
+ <section id="word-card" class="card stage">
+  <div class="target"><span id="target-sound" class="chip"></span><span id="target-place" class="chip pale"></span></div>
+  <img id="picture" alt="">
+  <p id="word" class="word"></p>
+  <button id="hear" class="round" type="button" aria-label="Say the word" title="Say the word"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l5 4V6L7 10zM16 9a4 4 0 0 1 0 6m2.5-9a8 8 0 0 1 0 12"/></svg></button>
+  <div class="modes" role="group" aria-label="How the child said it"><button type="button" data-mode="named" aria-pressed="true">Named</button><button type="button" data-mode="imitated" aria-pressed="false">After the model</button></div>
+ </section>
+ <section id="sentence-card" class="card stage" hidden>
+  <p class="kicker">Say after me</p>
+  <p id="sentence" class="sentence"></p>
+  <button id="hear-sentence" class="round" type="button" aria-label="Say the sentence" title="Say the sentence"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l5 4V6L7 10zM16 9a4 4 0 0 1 0 6m2.5-9a8 8 0 0 1 0 12"/></svg></button>
+  <p class="muted small">Tap each target sound the child said in error, then Next.</p>
+  <div id="sentence-targets" class="sound-chips" role="group" aria-label="Target sounds in error"></div>
+ </section>
+ <div id="scores" class="scores" role="group" aria-label="Score">
+  <button type="button" data-status="correct" class="score right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>Right</span></button>
+  <button type="button" data-status="substitution" class="score sub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg><span>Another sound</span></button>
+  <button type="button" data-status="omission" class="score omit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6 18 18 6"/></svg><span>Left out</span></button>
+  <button type="button" data-status="distortion" class="score dist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/></svg><span>Distorted</span></button>
+ </div>
+ <div class="run-nav">
+  <button id="prev" class="secondary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg><span>Back</span></button>
+  <button id="skip" class="ghost" type="button">Not tested</button>
+  <button id="next" class="secondary" type="button"><span>Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+ </div>
+ <button id="finish" class="primary finish" type="button">See the results</button>
+</main>
+
+<main id="report" class="page report" hidden>
+ <div class="report-tools"><button id="back-start" class="secondary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg><span>Tests</span></button><span class="grow"></span><button id="resume" class="secondary" type="button">Edit answers</button><button id="print" class="secondary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 17H3v-7h18v7h-3M7 14h10v7H7Z"/></svg><span>Print / PDF</span></button><button id="make-plan" class="primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4"/><path d="M19 8V3l3 1.5L19 6"/></svg><span>Make the therapy plan</span></button></div>
+ <article id="report-body"></article>
+</main>
+
+<dialog id="pick-sound" class="sheet" aria-labelledby="pick-title">
+ <div class="sheet-head"><h2 id="pick-title">Which sound did the child say?</h2><button class="icon" data-close type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+ <p class="muted small">Likely sounds first.</p>
+ <div id="pick-likely" class="sound-chips big"></div>
+ <div id="pick-all" class="sound-chips"></div>
+</dialog>
+
+<dialog id="accounts" class="sheet"></dialog>
+<div id="toast" class="toast" role="status" hidden></div>
+</body></html>

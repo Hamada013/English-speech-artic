@@ -1,0 +1,39 @@
+{
+  "id": "./",
+  "name": "Speech Sounds",
+  "short_name": "Speech Sounds",
+  "description": "Speech Sounds: English articulation for children, from the speech sound test to syllables, words, phrases, sentences, stories and contrast approaches, with a therapy plan and reports.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ffffff",
+  "categories": [
+    "education",
+    "kids",
+    "medical"
+  ],
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

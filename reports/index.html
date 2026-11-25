@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Reports</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="stylesheet" href="../assets/accounts.css"><link rel="stylesheet" href="../plan/plan.css"><link rel="stylesheet" href="reports.css">
+<script src="../assets/children.js" defer></script><script src="../assets/parent-gate.js" defer></script><script src="../assets/accounts.en.js" data-app="english-artic" defer></script>
+<script src="../assets/therapy.js" defer></script><script src="../assets/results.js" defer></script><script src="../assets/clinic.js" defer></script><script src="../assets/intervention-goals.js" defer></script><script src="../assets/intervention.en.js" defer></script><script src="../assets/child-file.en.js" data-app="english-artic" defer></script><script src="../assets/speech-sync.en.js" data-app="english-artic" defer></script><script src="../assets/speech-entry.en.js" data-app="english-artic" defer></script><script src="../assets/nav.js" defer></script><script src="reports.js" defer></script>
+<link rel="stylesheet" href="../assets/nav.css"><link rel="stylesheet" href="../assets/intervention.css"><link rel="stylesheet" href="../assets/clinic.css">
+</head><body>
+<header class="bar">
+ <a class="icon" href="../index.html" aria-label="Home page" title="Home page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H5V10M9 21v-8h6v8"/></svg></a>
+ <h1>Reports</h1>
+ <span class="bar-tools">
+  <a id="plan-link" class="icon" href="../plan/index.html" aria-label="Therapy plan" title="Therapy plan" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4"/><path d="M19 8V3l3 1.5L19 6"/></svg></a>
+  <button id="print" class="icon" type="button" aria-label="Print / Save PDF" title="Print / Save PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 17H3v-7h18v7h-3M7 14h10v7H7Z"/></svg></button>
+ </span>
+</header>
+<main>
+ <section class="who"><span id="face"></span><div><h2 id="name">—</h2><p id="when"></p></div></section>
+ <div id="chips" class="chips" role="group" aria-label="Parts in the report"></div>
+
+ <section id="empty" class="card empty" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m6 7H2"/></svg>
+  <p id="empty-text">No results yet.</p>
+ </section>
+
+ <div id="content" hidden>
+  <section class="card" aria-labelledby="sum-title"><div class="card-head"><h3 id="sum-title">Summary</h3><span class="muted">Latest result for each goal</span></div><div id="rings" class="rings"></div></section>
+  <section id="sounds-card" class="card" aria-labelledby="sounds-title"><div class="card-head"><h3 id="sounds-title">Sounds</h3></div><div id="grid" class="combo"></div>
+   <div class="scale"><span>0%</span><i></i><span>100%</span><span class="tick">✓ Goal reached</span><span class="none-key"><i></i>No results</span></div></section>
+  <section id="patterns-card" class="card" aria-labelledby="patterns-title"><div class="card-head"><h3 id="patterns-title">Approaches</h3></div><div id="pattern-bars" class="pbars"></div></section>
+  <section id="progress-card" class="card" aria-labelledby="progress-title"><div class="card-head"><h3 id="progress-title">Progress</h3><span class="muted">Average of each day</span></div><div id="legend" class="legend-row"></div><div id="chart" class="chart"></div></section>
+  <details class="card detail"><summary>Sessions</summary><div class="table-wrap"><table><thead><tr><th>Date</th><th>Part</th><th>Sound</th><th>Goal</th><th>Score</th></tr></thead><tbody id="sessions"></tbody></table></div></details>
+ </div>
+</main>
+</body></html>
