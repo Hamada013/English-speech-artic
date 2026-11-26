@@ -6,7 +6,7 @@
    shared file is never shown in Arabic by accident. */
 const fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const { STRINGS, CODE, KEEP } = require('./english-strings.cjs');
-const ROOT = path.join(__dirname, '..'), FILES = ['accounts.js', 'intervention.js', 'child-file.js', 'speech-sync.js', 'speech-entry.js'];
+const ROOT = path.join(__dirname, '..'), FILES = ['accounts.js', 'intervention.js', 'speech-sync.js', 'speech-entry.js'];
 const pairs = [...STRINGS].sort((a, b) => b[0].length - a[0].length);
 let failed = false;
 for (const name of FILES) {
