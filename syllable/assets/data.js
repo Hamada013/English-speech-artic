@@ -20,7 +20,9 @@ window.ArticulationData = (() => {
   ];
   const ONSET_FIX = { 'g-ee': 'ghee', 'y-oo': 'you', 'dh-ee': 'thee', 'th-ee': 'thee' };
   const cv = (c, v) => ONSET_FIX[`${c[0]}-${v.id}`] || `${c[2]}${v.cv}`;
-  const vc = (c, v) => `${v.vc}${v.id === 'ah' ? c[3] : c[4]}`;
+  // Spellings an English voice reads as one syllable ("ozh" and "oozh" were read letter by letter).
+  const VC_FIX = { 'zh-ah': 'ahzh', 'zh-oo': 'oozhe', 'g-ee': 'eague' };
+  const vc = (c, v) => VC_FIX[`${c[0]}-${v.id}`] || `${v.vc}${v.id === 'ah' ? c[3] : c[4]}`;
   const sounds = CONSONANTS.map((c, s) => {
     const [id, name] = c, item = (n, parts, word) => ({ id: `${id}-${n}`, art: `${id}-${n}`, letter: id, number: n, parts, word, spoken: word.replace(/-/g, ' '), audio: `sounds/${s + 1}/${n}.m4a` });
     const words = {
