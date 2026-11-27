@@ -203,7 +203,7 @@ async function showPage(turning) {
   const r = run(), page = story().phrases[r.page], leaf = $('leaf');
   $('book').hidden = false; $('order').hidden = true; $('tell').hidden = true;
   drawDots();
-  if (turning && !calm()) { leaf.classList.add('turn-out'); await wait(300); leaf.classList.remove('turn-out'); }
+  if (turning && !calm()) { leaf.classList.add('turn-out'); await wait(420); leaf.classList.remove('turn-out'); }
   shownPage = r.page;
   $('page-picture').src = pictureOf(page); $('page-picture').alt = page.text; $('page-text').textContent = page.text;
   if (turning && !calm()) { leaf.classList.add('turn-in'); setTimeout(() => leaf.classList.remove('turn-in'), 400); Sound.sfx('whoosh'); }

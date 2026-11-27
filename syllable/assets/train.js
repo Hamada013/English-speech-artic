@@ -142,13 +142,17 @@ export class Train {
     el('rect', { x: -3000, y: RAIL - 2, width: 7600, height: 8, fill: C.rail, stroke: INK, 'stroke-width': 2 }, this.svg);
     this.trainGroup = el('g', { class: 'train' }, this.svg);
     this.fx = el('g', {}, this.svg);
+    /* English (2026-11-27): the whole scene is mirrored, so the engine leads on the left, the train drives right to
+       left, and its cars read left to right from the engine: pah, pee, poo. */
+    const world = el('g', { transform: 'translate(1600 0) scale(-1 1)' }, this.svg);
+    [...this.svg.children].filter(node => node !== world).forEach(node => world.append(node));
     this.last = performance.now();
     this.frame = this.frame.bind(this);
     requestAnimationFrame(this.frame);
   }
 
-  /* Builds a train for one station: the engine at the front (right) and one car per syllable behind it, read from the engine back,
-     right to left like Arabic. this.cars keeps that order, so the whole train plays right to left. */
+  /* Builds a train for one station: the engine at the front and one car per syllable behind it, read from the engine back.
+     Drawn as in Arabic (engine on the right), then mirrored as a whole scene, so in English it reads left to right. */
   build(station, index = 0) {
     this.trainGroup.replaceChildren(); this.cars = [];
     /* A new driver and new riders at every station, never the same animals as the station before. */
@@ -166,7 +170,7 @@ export class Train {
       el('rect', { x: x + width, y: RAIL - 82, width: GAP, height: 12, fill: INK }, this.trainGroup);
       const car = el('g', { class: 'car', transform: `translate(${x} 0)`, tabindex: 0, role: 'button', 'aria-label': item.word, 'data-item': item.id }, this.trainGroup);
       const lift = el('g', { class: 'car-lift' }, car);
-      lift.innerHTML = s + item.parts.map((part, i) => { const k = i; return `<rect x="${18 + k * 120}" y="${RAIL - 200}" width="106" height="106" rx="14" fill="${C.cream}" ${line}/><g class="passenger" style="transform-origin:${71 + k * 120}px ${RAIL - 147}px">${pictureAt(part, 24 + k * 120, RAIL - 194, 94)}</g>`; }).join('') + `</g>` + wheel(40, 26) + wheel(width - 40, 26);
+      lift.innerHTML = s + item.parts.map((part, i) => { const k = n - 1 - i; return `<rect x="${18 + k * 120}" y="${RAIL - 200}" width="106" height="106" rx="14" fill="${C.cream}" ${line}/><g class="passenger" style="transform-origin:${71 + k * 120}px ${RAIL - 147}px">${pictureAt(part, 24 + k * 120, RAIL - 194, 94)}</g>`; }).join('') + `</g>` + wheel(40, 26) + wheel(width - 40, 26);
       this.cars.push({ node: car, lift, item, x, width });
     });
     /* The riders sit on top of the cars, apart from them, so tapping one never plays the car's sound. */
